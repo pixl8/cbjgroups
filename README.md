@@ -2,7 +2,7 @@
 
 [![On Forgebox](https://forgebox.io/api/v1/entry/cbjgroups/badges/version)](https://forgebox.io/view/cbjgroups)
 
-[![Build Status](https://travis-ci.org/pixl8/cbehcache.svg?branch=stable)](https://travis-ci.org/pixl8/cbehcache)
+[![Build Status](https://travis-ci.org/pixl8/cbjgroups.svg?branch=stable)](https://travis-ci.org/pixl8/cbjgroups)
 
 This extension provides a cluster communication system for ColdBox applications using [jGroups](http://www.jgroups.org/), a mature and maintained clustering API for java applications.
 
