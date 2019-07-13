@@ -21,7 +21,7 @@ if [[ $TRAVIS_TAG == v* ]] ; then
 	cd ../
 	mkdir -p ./lib
 	cp ./java-src/artifacts/*.jar ./lib/
-	echo "Done packaging java source
+	echo "Done packaging java source."
 
 	rm -rf $BUILD_DIR
 	mkdir -p $BUILD_DIR
