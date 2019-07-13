@@ -1,0 +1,18 @@
+language: python
+python:
+  - "3.5"
+jdk:
+  - oraclejdk8
+before_install:
+  - mkdir /tmp/bin
+  - export PATH=$PATH:/tmp/bin
+cache: pip
+install:
+  - curl --location 'https://www.ortussolutions.com/parent/download/commandbox/type/bin' -o /tmp/box.zip
+  - unzip /tmp/box.zip -d /tmp/bin
+  - pip install awscli
+script:
+  - ./buildDeployAndPublish.sh
+
+notifications:
+  email: false

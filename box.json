@@ -1,0 +1,22 @@
+{
+    "name":"JGroups integration for ColdBox",
+    "author":"Pixl8 Group",
+    "version":"VERSION_NUMBER",
+    "location":"https://s3.eu-west-2.amazonaws.com/pixl8-public-packages/cbjgroups/DOWNLOAD_LOCATION",
+    "slug":"cbjgroups",
+    "type":"modules",
+    "homepage":"https://github.com/pixl8/cbjgroups",
+    "documentation":"https://github.com/pixl8/cbjgroups",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/pixl8/cbjgroups"
+    },
+    "shortDescription":"A module to seamlessly integrate Coldbox with jGroups for clustering support for your applications",
+    "contributors":[
+        "Dominic Watson <watson.dominic@gmail.com>"
+    ],
+    "ignore":[
+        "**/.*",
+        "build"
+    ]
+}
