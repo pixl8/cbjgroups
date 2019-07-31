@@ -9,7 +9,7 @@ component {
 
 	property name="coldbox"  inject="coldbox";
 	property name="logger"   inject="logbox:logger";
-	property name="settings" inject="coldbox:setting:cbjgroups@cbjgroups";
+	property name="settings" inject="coldbox:modulesettings:cbjgroups";
 
 	variables._clusters = {};
 
