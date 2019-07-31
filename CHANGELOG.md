@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.5
+
+* Fix for bad module configuration injection into the factory
+
 ## v0.1.4
 
 * README fix (build status badge pointing at wrong repo)
