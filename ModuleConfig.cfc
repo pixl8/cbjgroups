@@ -10,7 +10,7 @@ component {
 	this.parseParentSettings = true;
 
 	function configure(){
-		settings.caches = {};
+		settings.clusters = {};
 
 		controller.getWireBox().registerDSL(
 			  namespace = "cbjgroups"
