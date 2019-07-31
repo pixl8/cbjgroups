@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.1.6
+
+* Change 'moduleconfig.cbjgroups.caches' to .. 'clusters'!
+
 ## v0.1.5
 
 * Fix for bad module configuration injection into the factory

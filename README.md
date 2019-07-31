@@ -76,7 +76,7 @@ Call `myCluster.getStats()` to obtain a structure with reportable information ab
 You can register custom cluster settings in your application's Coldbox config file. The syntax is as follows:
 
 ```cfc
-moduleSettings.cbjgroups.caches.myAppCluster = {
+moduleSettings.cbjgroups.clusters.myAppCluster = {
 	  name                 = "my-app-cluster" // could be different from ID
 	, jgroupsConfigXmlPath = ExpandPath( "/config/myClusterJgroupsConfig.xml" )
 	, discardOwnMessages   = false // default is true
