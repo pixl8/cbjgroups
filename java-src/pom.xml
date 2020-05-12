@@ -24,6 +24,11 @@
 			<artifactId>jgroups</artifactId>
 			<version>4.1.1.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jgroups.kubernetes</groupId>
+			<artifactId>jgroups-kubernetes</artifactId>
+			<version>1.0.3.Final</version>
+		</dependency>
 	</dependencies>
 
 	<build>
