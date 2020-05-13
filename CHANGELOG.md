@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1
+
+* Fix for mapping issues when reading the lib
+* Fix for errors logged in the console when cluster is connected to
+
+## 0.2.0
+
+* Build in the Kubernetes ping autodiscovery to the library
+
 ## v0.1.6
 
 * Change 'moduleconfig.cbjgroups.caches' to .. 'clusters'!

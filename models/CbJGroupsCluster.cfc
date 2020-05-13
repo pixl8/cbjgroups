@@ -145,6 +145,15 @@ component {
 		return stats;
 	}
 
+	/**
+	 * Called when a change in membership has occurred
+	 *
+	 */
+	public void function viewAccepted( required any view  ) {
+		// TODO, something here at some point. Just implementing the method means we avoid errors
+		// being logged.
+	}
+
 // PRIVATE HELPERS
 	private void function _setupJChannel() {
 		var configXmlPath = _getJGroupsConfigXmlPath();
@@ -177,7 +186,7 @@ component {
 	}
 
 	private array function _getLib() {
-		return DirectoryList( ExpandPath( "/cbjgroups/lib/" ), false, "path" );
+		return DirectoryList( ExpandPath( GetDirectoryFromPath(GetCurrentTemplatePath()) & "../lib" ), false, "path" );
 	}
 
 	private any function _setupApplicationContext() {
