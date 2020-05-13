@@ -150,7 +150,8 @@ component {
 	 *
 	 */
 	public void function viewAccepted( required any view  ) {
-		_getLogger().info( "** view: #arguments.view#" );
+		// TODO, something here at some point. Just implementing the method means we avoid errors
+		// being logged.
 	}
 
 // PRIVATE HELPERS
