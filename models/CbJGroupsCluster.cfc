@@ -145,6 +145,14 @@ component {
 		return stats;
 	}
 
+	/**
+	 * Called when a change in membership has occurred
+	 *
+	 */
+	public void function viewAccepted( required any view  ) {
+		_getLogger().info( "** view: #arguments.view#" );
+	}
+
 // PRIVATE HELPERS
 	private void function _setupJChannel() {
 		var configXmlPath = _getJGroupsConfigXmlPath();
