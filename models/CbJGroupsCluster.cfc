@@ -177,7 +177,7 @@ component {
 	}
 
 	private array function _getLib() {
-		return DirectoryList( ExpandPath( "/cbjgroups/lib/" ), false, "path" );
+		return DirectoryList( ExpandPath( GetDirectoryFromPath(GetCurrentTemplatePath()) & "../lib" ), false, "path" );
 	}
 
 	private any function _setupApplicationContext() {
