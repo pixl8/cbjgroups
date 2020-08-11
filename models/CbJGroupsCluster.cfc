@@ -98,7 +98,7 @@ component {
 		_setupApplicationContext();
 
 		try {
-			message = DeserializeJson( msg.getObject().toString() );
+			var message = DeserializeJson( msg.getObject().toString(), false );
 			message.eventArguments.isCbJGroupsCall = true;
 
 			_getColdbox().getRequestService().getContext().setValue( name="_isCbJGroupsCall", value=true, private=true );
