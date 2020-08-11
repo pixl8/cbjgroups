@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.2
+
+* [#3](https://github.com/pixl8/cbjgroups/issues/3) Fix for missing var scope in message receive method
+* [#4](https://github.com/pixl8/cbjgroups/issues/4) Fix for bad query deserialization when receiving messages
+
 ## 0.2.1
 
 * Fix for mapping issues when reading the lib
