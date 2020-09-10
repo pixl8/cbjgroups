@@ -98,7 +98,7 @@ component {
 		_setupApplicationContext();
 
 		try {
-			var message = DeserializeJson( msg.getObject().toString(), false );
+			var message = DeserializeJson( binaryToString(msg.getBuffer()), false );
 			message.eventArguments.isCbJGroupsCall = true;
 
 			_getColdbox().getRequestService().getContext().setValue( name="_isCbJGroupsCall", value=true, private=true );
@@ -194,7 +194,8 @@ component {
 	}
 
 	private any function _getMessage( required string message ) {
-		return CreateObject( "java", "org.jgroups.Message", _getLib() ).init( NullValue(), arguments.message );
+
+		return CreateObject( "java", "org.jgroups.Message", _getLib() ).init( NullValue(), stringToBinary(arguments.message) );
 	}
 
 	private boolean function _isConnected() {
@@ -262,5 +263,15 @@ component {
 	}
 	private void function _setDiscardOwnMessages( required boolean discardOwnMessages ) {
 	    _discardOwnMessages = arguments.discardOwnMessages;
+	}
+
+	private any function stringToBinary( String stringValue ){
+		var base64Value = toBase64( stringValue );
+		var binaryValue = toBinary( base64Value );
+		return( binaryValue );
+	}
+	private any function binaryToString( Any binaryValue ){
+		var stringValue = toString( binaryValue );
+		return( stringValue );
 	}
 }
