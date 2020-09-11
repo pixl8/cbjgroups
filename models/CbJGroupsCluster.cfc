@@ -268,10 +268,9 @@ component {
 	private any function stringToBinary( String stringValue ){
 		var base64Value = toBase64( stringValue );
 		var binaryValue = toBinary( base64Value );
-		return( binaryValue );
+		return binaryValue ;
 	}
 	private any function binaryToString( Any binaryValue ){
-		var stringValue = toString( binaryValue );
-		return( stringValue );
+		return toString( arguments.binaryValue ) ;
 	}
 }
