@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.3
+
+* [#6](https://github.com/pixl8/cbjgroups/issues/6) Fix issue with message length limitations
+
 ## 0.2.2
 
 * [#3](https://github.com/pixl8/cbjgroups/issues/3) Fix for missing var scope in message receive method
