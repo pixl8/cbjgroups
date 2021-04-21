@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.4
+
+* [#7](https://github.com/pixl8/cbjgroups/issues/7) Fix issue introduced in #6 where messages would not be received
+* [#8](https://github.com/pixl8/cbjgroups/issues/8) Switch to Github actions building flow
+
 ## 0.2.3
 
 * [#6](https://github.com/pixl8/cbjgroups/issues/6) Fix issue with message length limitations

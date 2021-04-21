@@ -41,18 +41,10 @@ public class CbJGroupsMessageReceiver extends ReceiverAdapter {
 		Struct args = _createStruct();
 		args.put( "msg", msg );
 
-		debug( "receive: " + msg.getObject() );
 		_callListenerCfc( "receive", args );
 	}
 
 // LOGGING
-	public void debug( String message ) {
-		try {
-			logger.call( _getPageContext(), "debug", new Object[]{ message } );
-		} catch( PageException e ) {
-		} catch( ServletException e ) {}
-	}
-
 	public void info( String message ) {
 		try {
 			logger.call( _getPageContext(), "info", new Object[]{ message } );
