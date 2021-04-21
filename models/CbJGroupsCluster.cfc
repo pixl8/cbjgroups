@@ -131,6 +131,7 @@ component {
 		for( var i=1; i<=ArrayLen( members ); i++ ) {
 			stats.members.append( members[ i ].toString() );
 		}
+		stats.is_coordinator = ArrayLen( stats.members ) <= 1 || stats.members[ 1 ] == stats.self;
 
 		if ( channel.isConnected() ) {
 			stats.connection = "CONNECTED";
@@ -146,12 +147,24 @@ component {
 	}
 
 	/**
+	 * Returns whether or not the node running this logic
+	 * is the "co-ordinator" in the cluster
+	 *
+	 */
+	public boolean function isCoordinator() {
+		var channel = _getChannel();
+		var members = channel.getView().getMembers();
+		var self = channel.getAddress().toString();
+
+		return ArrayLen( members ) <= 1 || members[ 1 ].toString() == self;
+	}
+
+	/**
 	 * Called when a change in membership has occurred
 	 *
 	 */
 	public void function viewAccepted( required any view  ) {
-		// TODO, something here at some point. Just implementing the method means we avoid errors
-		// being logged.
+		_announceInterception( "onJgroupsClusterMemberChange", { view=arguments.view } );
 	}
 
 // PRIVATE HELPERS
@@ -205,6 +218,20 @@ component {
 		var channel = _getChannel();
 
 		return !IsNull( local.channel );
+	}
+
+	private void function _announceInterception() {
+		return _getColdbox().getInterceptorService().processState( argumentCollection=arguments );
+	}
+
+	private any function _stringToBinary( required string stringValue ){
+		var base64Value = ToBase64( stringValue );
+		var binaryValue = ToBinary( base64Value );
+
+		return binaryValue ;
+	}
+	private any function _binaryToString( required any binaryValue ){
+		return ToString( arguments.binaryValue );
 	}
 
 // GETTERS AND SETTERS
@@ -262,15 +289,5 @@ component {
 	}
 	private void function _setDiscardOwnMessages( required boolean discardOwnMessages ) {
 	    _discardOwnMessages = arguments.discardOwnMessages;
-	}
-
-	private any function _stringToBinary( required string stringValue ){
-		var base64Value = ToBase64( stringValue );
-		var binaryValue = ToBinary( base64Value );
-
-		return binaryValue ;
-	}
-	private any function _binaryToString( required any binaryValue ){
-		return ToString( arguments.binaryValue );
 	}
 }

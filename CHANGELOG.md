@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0
+
+* [#9](https://github.com/pixl8/cbjgroups/issues/9) Add method on cluster to determine whether or not this member is the coordinator
+* [#10](https://github.com/pixl8/cbjgroups/issues/10) Raise coldbox interception event whenever membership of the cluster changes
+
 ## 0.2.4
 
 * [#7](https://github.com/pixl8/cbjgroups/issues/7) Fix issue introduced in #6 where messages would not be received
