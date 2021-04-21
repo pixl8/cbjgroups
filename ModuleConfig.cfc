@@ -16,11 +16,16 @@ component {
 			  namespace = "cbjgroups"
 			, path      = "#moduleMapping#.models.CbJGroupsClusterDsl"
 		);
+
+		interceptorSettings = interceptorSettings ?: {};
+		interceptorSettings.customInterceptionPoints = interceptorSettings.customInterceptionPoints ?: [];
+
+		ArrayAppend( interceptorSettings.customInterceptionPoints, "onJgroupsClusterMemberChange" );
 	}
 
 	function applicationEnd(){
 		try {
-			wirebox.getInstance( "CbJGroupsClusterFactory@#modelNamespace#" ).shutdown();
+			wirebox.getInstance( "CbJGroupsClusterFactory@#this.modelNamespace#" ).shutdown();
 		} catch( any e ) {
 			SystemOutput( "Error shutting down JGroups clusters: #( e.message ?: '' )#. Detail: #( e.detail ?: '' )#" );
 		}

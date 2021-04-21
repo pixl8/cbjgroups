@@ -164,8 +164,7 @@ component {
 	 *
 	 */
 	public void function viewAccepted( required any view  ) {
-		// TODO, something here at some point. Just implementing the method means we avoid errors
-		// being logged.
+		_announceInterception( "onJgroupsClusterMemberChange", { view=arguments.view } );
 	}
 
 // PRIVATE HELPERS
@@ -219,6 +218,20 @@ component {
 		var channel = _getChannel();
 
 		return !IsNull( local.channel );
+	}
+
+	private void function _announceInterception() {
+		return _getColdbox().getInterceptorService().processState( argumentCollection=arguments );
+	}
+
+	private any function _stringToBinary( required string stringValue ){
+		var base64Value = ToBase64( stringValue );
+		var binaryValue = ToBinary( base64Value );
+
+		return binaryValue ;
+	}
+	private any function _binaryToString( required any binaryValue ){
+		return ToString( arguments.binaryValue );
 	}
 
 // GETTERS AND SETTERS
@@ -276,15 +289,5 @@ component {
 	}
 	private void function _setDiscardOwnMessages( required boolean discardOwnMessages ) {
 	    _discardOwnMessages = arguments.discardOwnMessages;
-	}
-
-	private any function _stringToBinary( required string stringValue ){
-		var base64Value = ToBase64( stringValue );
-		var binaryValue = ToBinary( base64Value );
-
-		return binaryValue ;
-	}
-	private any function _binaryToString( required any binaryValue ){
-		return ToString( arguments.binaryValue );
 	}
 }
