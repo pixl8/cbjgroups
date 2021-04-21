@@ -131,6 +131,7 @@ component {
 		for( var i=1; i<=ArrayLen( members ); i++ ) {
 			stats.members.append( members[ i ].toString() );
 		}
+		stats.is_coordinator = ArrayLen( stats.members ) <= 1 || stats.members[ 1 ] == stats.self;
 
 		if ( channel.isConnected() ) {
 			stats.connection = "CONNECTED";
@@ -143,6 +144,19 @@ component {
 		}
 
 		return stats;
+	}
+
+	/**
+	 * Returns whether or not the node running this logic
+	 * is the "co-ordinator" in the cluster
+	 *
+	 */
+	public boolean function isCoordinator() {
+		var channel = _getChannel();
+		var members = channel.getView().getMembers();
+		var self = channel.getAddress().toString();
+
+		return ArrayLen( members ) <= 1 || members[ 1 ].toString() == self;
 	}
 
 	/**
