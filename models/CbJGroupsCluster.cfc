@@ -164,6 +164,7 @@ component {
 	 *
 	 */
 	public void function viewAccepted( required any view  ) {
+		_setupApplicationContext();
 		_announceInterception( "onJgroupsClusterMemberChange", { view=arguments.view } );
 	}
 
