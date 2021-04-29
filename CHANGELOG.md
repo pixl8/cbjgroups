@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.1
+
+* [#11](https://github.com/pixl8/cbjgroups/issues/11) Fix issue where app context is missing when running logic when cluster membership changes
+
+
 ## 0.3.0
 
 * [#9](https://github.com/pixl8/cbjgroups/issues/9) Add method on cluster to determine whether or not this member is the coordinator
