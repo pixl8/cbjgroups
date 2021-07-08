@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.2
+
+* [#12](https://github.com/pixl8/cbjgroups/issues/12) Fix memory leak issue in core KUBE_PING java library by upgrading the upstream lib
+
 ## 0.3.1
 
 * [#11](https://github.com/pixl8/cbjgroups/issues/11) Fix issue where app context is missing when running logic when cluster membership changes
