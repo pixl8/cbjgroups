@@ -63,7 +63,7 @@ component {
 			_getChannel().close();
 			_getLogger().info( "Completed disconnecting from jGroups cluster [#_getClusterName()#]." );
 		} catch( any e ) {
-			$raiseError( e );
+			_getLogger().error( e );
 		}
 	}
 
