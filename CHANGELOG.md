@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.3
+
+* [#14](https://github.com/pixl8/cbjgroups/issues/14) Fix issue with try/catch logic using Preside helper function that is unavailable to this non-Preside-specific service
+
 ## 0.3.2
 
 * [#12](https://github.com/pixl8/cbjgroups/issues/12) Fix memory leak issue in core KUBE_PING java library by upgrading the upstream lib
