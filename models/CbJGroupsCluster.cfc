@@ -143,7 +143,7 @@ component {
 		_registerOsgiBundle();
 
 		_setClusterWrapper( CreateObject( "java", "org.pixl8.cbjgroups.CbJGroupsClusterWrapper", "org.pixl8.cbjgroups" ).init(
-			, _getJGroupsConfigXmlPath() // configFilePath
+			  _getJGroupsConfigXmlPath() // configFilePath
 			, _getDiscardOwnMessages()   // discardOwnMessages
 			, this                       // listenerCfc
 			, _getLogger()               // loggerCfc
