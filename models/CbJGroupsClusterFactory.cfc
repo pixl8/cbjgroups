@@ -45,7 +45,6 @@ component {
 		}
 	}
 
-
 // PRIVATE HELPERS
 	private struct function _getClusterSettings( required string clusterName  ) {
 		return {
