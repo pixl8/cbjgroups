@@ -1,6 +1,6 @@
 /**
  * Object to represent a cluster. Once instantiated,
- * this object takes provides an API to run ColdBox
+ * this object provides an API to run ColdBox
  * events across your cluster and takes care of
  * receiving and processing requests from other
  * members of your cluster.
@@ -37,14 +37,11 @@ component {
 			lock type="exclusive" name=_getLockname() timeout=0 {
 				if ( !_isConnected() ) {
 					_getLogger().info( "Connecting to jGroups cluster: [#_getClusterName()#]..." );
-					if ( !_isJChannelInitialized() ) {
-						_setupJChannel();
+					if ( !_isClusterInitialised() ) {
+						_setupCluster();
 					}
 
-					var channel = _getChannel();
-
-					channel.setReceiver( _setupReceiver() );
-					channel.connect( _getClusterName() );
+					_getClusterWrapper().connect( _getClusterName() );
 
 					_getLogger().info( "Connected to jGroups cluster: [#_getClusterName()#]" );
 				}
@@ -60,7 +57,7 @@ component {
 	public void function shutdown() {
 		try {
 			_getLogger().info( "Disconnecting from jGroups cluster [#_getClusterName()#]..." );
-			_getChannel().close();
+			_getClusterWrapper().close();
 			_getLogger().info( "Completed disconnecting from jGroups cluster [#_getClusterName()#]." );
 		} catch( any e ) {
 			_getLogger().error( e );
@@ -81,12 +78,12 @@ component {
 		,          boolean prePostExempt = true
 		,          boolean private       = true
 	) {
-		_getChannel().send( _getMessage( SerializeJson( {
+		_getClusterWrapper().sendMessage( SerializeJson( {
 			  event          = arguments.event
 			, eventArguments = arguments.eventArguments
 			, prePostExempt  = arguments.prePostExempt
 			, private        = arguments.private
-		} ) ) );
+		} ) );
 	}
 
 	/**
@@ -120,30 +117,7 @@ component {
 	 *
 	 */
 	public any function getStats() {
-		var stats   = {};
-		var channel = _getChannel();
-		var members = channel.getView().getMembers();
-
-		stats.append( channel.dumpStats().channel );
-		stats.members = [];
-		stats.self = channel.getAddress().toString();
-
-		for( var i=1; i<=ArrayLen( members ); i++ ) {
-			stats.members.append( members[ i ].toString() );
-		}
-		stats.is_coordinator = ArrayLen( stats.members ) <= 1 || stats.members[ 1 ] == stats.self;
-
-		if ( channel.isConnected() ) {
-			stats.connection = "CONNECTED";
-		} else if ( channel.isConnecting() ) {
-			stats.connection = "CONNECTING";
-		} else if ( channel.isOpen() ) {
-			stats.connection = "DISCONNECTED";
-		} else {
-			stats.connection = "CLOSED";
-		}
-
-		return stats;
+		return _getClusterWrapper().getStats();
 	}
 
 	/**
@@ -152,11 +126,7 @@ component {
 	 *
 	 */
 	public boolean function isCoordinator() {
-		var channel = _getChannel();
-		var members = channel.getView().getMembers();
-		var self = channel.getAddress().toString();
-
-		return ArrayLen( members ) <= 1 || members[ 1 ].toString() == self;
+		return _getClusterWrapper().isCoordinator();
 	}
 
 	/**
@@ -169,54 +139,41 @@ component {
 	}
 
 // PRIVATE HELPERS
-	private void function _setupJChannel() {
-		var configXmlPath = _getJGroupsConfigXmlPath();
-		var channel = "";
+	private void function _setupCluster() {
+		_registerOsgiBundle();
 
-		// user specified config
-		if ( Len( Trim( configXmlPath ) ) ) {
-			if ( !FileExists( configXmlPath ) ) {
-				throw( type="cbjgroups.bad.config", message="The configured XML config file, [#configXmlPath#], could not be found." );
-			}
-			var configFile = CreateObject( "java", "java.io.File" ).init( configXmlPath );
-			channel = CreateObject( "java", "org.jgroups.JChannel", _getLib() ).init( configFile );
+		_setClusterWrapper( CreateObject( "java", "org.pixl8.cbjgroups.CbJGroupsClusterWrapper", "org.pixl8.cbjgroups" ).init(
+			, _getJGroupsConfigXmlPath() // configFilePath
+			, _getDiscardOwnMessages()   // discardOwnMessages
+			, this                       // listenerCfc
+			, _getLogger()               // loggerCfc
+			, ExpandPath( "/" )          // contextRoot
+		) );
+	}
 
-		// default jgroups config
-		} else {
-			channel = CreateObject( "java", "org.jgroups.JChannel", _getLib() ).init();
+	private function _registerOsgiBundle() {
+		if ( !StructKeyExists( application, "_cbjgroupsBundleRegistered" ) ) {
+			var cfmlEngine = CreateObject( "java", "lucee.loader.engine.CFMLEngineFactory" ).getInstance();
+			var osgiUtil   = CreateObject( "java", "lucee.runtime.osgi.OSGiUtil" );
+			var lib        = ExpandPath( GetDirectoryFromPath(GetCurrentTemplatePath()) & "../lib/cbjgroups-1.0.0.jar" );
+			var resource   = cfmlEngine.getResourceUtil().toResourceExisting( getPageContext(), lib );
+
+			osgiUtil.installBundle( cfmlEngine.getBundleContext(), resource, true );
+
+			application._cbjgroupsBundleRegistered = true;
 		}
-
-		channel.setDiscardOwnMessages( JavaCast( "Boolean", _getDiscardOwnMessages() ) );
-
-		_setChannel( channel );
-	}
-
-	private any function _setupReceiver(){
-		return CreateObject( "java", "org.pixl8.cbjgroups.CbJGroupsMessageReceiver", _getLib() ).init(
-			  this              // ListenerCFC
-			, _getLogger()      // LoggerCFC
-			, ExpandPath( "/" ) // Context path
-		);
-	}
-
-	private array function _getLib() {
-		return DirectoryList( ExpandPath( GetDirectoryFromPath(GetCurrentTemplatePath()) & "../lib" ), false, "path" );
 	}
 
 	private any function _setupApplicationContext() {
 		getPageContext().setApplicationContext( _getApplicationContext() );
 	}
 
-	private any function _getMessage( required string message ) {
-		return CreateObject( "java", "org.jgroups.Message", _getLib() ).init( NullValue(), _stringToBinary( arguments.message ) );
-	}
-
 	private boolean function _isConnected() {
-		return _isJChannelInitialized() && _getChannel().isConnected();
+		return _isClusterInitialised() && _getClusterWrapper().isConnected();
 	}
 
-	private boolean function _isJChannelInitialized() {
-		var channel = _getChannel();
+	private boolean function _isClusterInitialised() {
+		var channel = _getClusterWrapper();
 
 		return !IsNull( local.channel );
 	}
@@ -225,12 +182,6 @@ component {
 		return _getColdbox().getInterceptorService().processState( argumentCollection=arguments );
 	}
 
-	private any function _stringToBinary( required string stringValue ){
-		var base64Value = ToBase64( stringValue );
-		var binaryValue = ToBinary( base64Value );
-
-		return binaryValue ;
-	}
 	private any function _binaryToString( required any binaryValue ){
 		return ToString( arguments.binaryValue );
 	}
@@ -250,10 +201,10 @@ component {
 		_applicationContext = arguments.applicationContext;
 	}
 
-	private any function _getChannel() {
+	private any function _getClusterWrapper() {
 	    return _channel ?: NullValue();
 	}
-	private void function _setChannel( required any channel ) {
+	private void function _setClusterWrapper( required any channel ) {
 	    _channel = arguments.channel;
 	}
 

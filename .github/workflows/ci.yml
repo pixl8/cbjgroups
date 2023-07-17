@@ -24,7 +24,21 @@ jobs:
           fetch-depth: 0
 
       - name: Build jars
-        run: cd java-src && mvn package && mkdir ../lib && cp artifacts/*.jar ../lib/
+        run: cd java-src && mvn package
+
+      - name: Convert to bundle
+        run: |
+          cd java-src/artifacts && \
+          unzip cbjgroups-1.0.0.jar && \
+          echo "Manifest-Version: 1.0
+          Bundle-ManifestVersion: 2
+          Bundle-Name: CBJGroups Java Services
+          Bundle-SymbolicName: org.pixl8.cbjgroups
+          Bundle-Version: 1.0.0
+          " > META-INF/MANIFEST.MF && \
+          rm cbjgroups-1.0.0.jar && \
+          zip -rq cbjgroups-1.0.0.jar * && \
+          cp cbjgroups-1.0.0.jar ../../lib/
 
       - name: Generate release version number
         if: "env.PUBLISH == 'true'"
