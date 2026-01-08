@@ -18,7 +18,7 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - name: Build jars
-        run: cd java-src && mvn package && cp target/cbjgroups-1.0.0-jar-with-dependencies.jar lib/cbjgroups.jar
+        run: cd java-src && mvn package && cp target/cbjgroups-1.0.0-jar-with-dependencies.jar ../lib/cbjgroups.jar
       - name: Convert to bundle
         run: |
           cd java-src/artifacts && \
