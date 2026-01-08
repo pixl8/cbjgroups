@@ -2,7 +2,8 @@
 
 
 cd java-src
-rm -rf artifacts/*
+rm -rf artifacts
+mkdir -p artifacts
 
 mvn package || exit 1
 cp target/cbjgroups-1.0.0-jar-with-dependencies.jar artifacts/cbjgroups.jar
