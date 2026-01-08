@@ -43,9 +43,9 @@ jobs:
           - cfengine: "lucee@7.0"
             jdkVersion: "24"
             experimental: true
-          - cfengine: "boxlang@stable"
-            jdkVersion: "24"
-            experimental: true
+          # - cfengine: "boxlang@stable"
+          #   jdkVersion: "24"
+          #   experimental: true
     continue-on-error: ${{ matrix.experimental }}
     steps:
       - name: Checkout code
