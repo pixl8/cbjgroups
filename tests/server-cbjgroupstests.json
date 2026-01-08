@@ -1,0 +1,14 @@
+{
+    "app":{
+        "cfengine":"lucee@5.4"
+    },
+    "name":"cbjgroupstests",
+    "openbrowser":false,
+    "trayEnable":false,
+    "web":{
+        "http":{
+            "port":"6556"
+        },
+        "webroot":"/"
+    }
+}

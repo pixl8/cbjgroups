@@ -17,6 +17,16 @@
     ],
     "ignore":[
         "**/.*",
-        "build"
-    ]
+        "build",
+        "tests"
+    ],
+    "devDependencies":{
+        "testbox":"6.4.0"
+    },
+    "installPaths":{
+        "testbox":"tests/testbox/"
+    },
+    "testbox":{
+        "runner":"http://127.0.0.1:6556/runtests.cfm"
+    }
 }

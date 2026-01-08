@@ -130,6 +130,14 @@ component {
 	}
 
 	/**
+	 * Returns whether or not the cluster is currently connected
+	 *
+	 */
+	public boolean function isConnected() {
+		return _isConnected();
+	}
+
+	/**
 	 * Called when a change in membership has occurred
 	 *
 	 */
