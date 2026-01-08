@@ -18,20 +18,20 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - name: Build jars
-        run: cd java-src && mvn package
+        run: cd java-src && mvn package && cp target/cbjgroups-jar-with-dependencies.jar lib/cbjgroups.jar
       - name: Convert to bundle
         run: |
           cd java-src/artifacts && \
-          unzip cbjgroups-1.0.0.jar && \
+          unzip cbjgroups.jar && \
           echo "Manifest-Version: 1.0
           Bundle-ManifestVersion: 2
           Bundle-Name: CBJGroups Java Services
           Bundle-SymbolicName: org.pixl8.cbjgroups
           Bundle-Version: 1.0.0
           " > META-INF/MANIFEST.MF && \
-          rm cbjgroups-1.0.0.jar && \
-          zip -rq cbjgroups-1.0.0.jar * && \
-          cp cbjgroups-1.0.0.jar ../../lib/
+          rm cbjgroups.jar && \
+          zip -rq cbjgroups.jar * && \
+          cp cbjgroups.jar ../../lib/
       - name: Upload Java Artifacts
         uses: actions/upload-artifact@v4
         with:

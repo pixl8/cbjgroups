@@ -163,7 +163,7 @@ component {
 		if ( !StructKeyExists( application, "_cbjgroupsBundleRegistered" ) ) {
 			var cfmlEngine = CreateObject( "java", "lucee.loader.engine.CFMLEngineFactory" ).getInstance();
 			var osgiUtil   = CreateObject( "java", "lucee.runtime.osgi.OSGiUtil" );
-			var lib        = ExpandPath( GetDirectoryFromPath(GetCurrentTemplatePath()) & "../lib/cbjgroups-1.0.0.jar" );
+			var lib        = ExpandPath( GetDirectoryFromPath(GetCurrentTemplatePath()) & "../lib/cbjgroups.jar" );
 			var resource   = cfmlEngine.getResourceUtil().toResourceExisting( getPageContext(), lib );
 
 			osgiUtil.installBundle( cfmlEngine.getBundleContext(), resource, true );
