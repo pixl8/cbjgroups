@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.pixl8</groupId>
-	<artifactId>cbjgroups</artifactId>
+	<artifactId>cbjgroups-jakarta</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0.0</version>
 	<name>JGroups clustering for ColdBox</name>
@@ -10,13 +10,13 @@
 		<dependency>
 			<groupId>org.lucee</groupId>
 			<artifactId>lucee</artifactId>
-			<version>5.3.3.60-RC</version>
+			<version>7.0.1.100</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet.jsp</groupId>
-			<artifactId>jsp-api</artifactId>
-			<version>2.2.1-b03</version>
+			<groupId>jakarta.servlet.jsp</groupId>
+			<artifactId>jakarta.servlet.jsp-api</artifactId>
+			<version>4.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

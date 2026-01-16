@@ -130,6 +130,14 @@ component {
 	}
 
 	/**
+	 * Returns whether or not the cluster is currently connected
+	 *
+	 */
+	public boolean function isConnected() {
+		return _isConnected();
+	}
+
+	/**
 	 * Called when a change in membership has occurred
 	 *
 	 */
@@ -152,10 +160,15 @@ component {
 	}
 
 	private function _registerOsgiBundle() {
+		if ( !_isLucee() ) {
+			return;
+		}
+
 		if ( !StructKeyExists( application, "_cbjgroupsBundleRegistered" ) ) {
 			var cfmlEngine = CreateObject( "java", "lucee.loader.engine.CFMLEngineFactory" ).getInstance();
 			var osgiUtil   = CreateObject( "java", "lucee.runtime.osgi.OSGiUtil" );
-			var lib        = ExpandPath( GetDirectoryFromPath(GetCurrentTemplatePath()) & "../lib/cbjgroups-1.0.0.jar" );
+			var jarFile    = _isJakarta() ? "cbjgroups-jakarta.jar" : "cbjgroups.jar";
+			var lib        = ExpandPath( GetDirectoryFromPath(GetCurrentTemplatePath()) & "../lib/#jarFile#" );
 			var resource   = cfmlEngine.getResourceUtil().toResourceExisting( getPageContext(), lib );
 
 			osgiUtil.installBundle( cfmlEngine.getBundleContext(), resource, true );
@@ -184,6 +197,23 @@ component {
 
 	private any function _binaryToString( required any binaryValue ){
 		return ToString( arguments.binaryValue );
+	}
+
+	private boolean function _isLucee() {
+		return StructKeyExists( server, "lucee" );
+	}
+
+	private boolean function _isJakarta() {
+		if ( !StructKeyExists( variables, "isJakarta" ) ) {
+			try {
+				createObject( "java", "jakarta.servlet.ServletException" );
+				variables.isJakarta = true;
+			} catch( any e ) {
+				variables.isJakarta = false;
+			}
+		}
+
+		return variables.isJakarta;
 	}
 
 // GETTERS AND SETTERS

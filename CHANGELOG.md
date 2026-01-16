@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0
+
+* Compatability updates with Lucee 7
+
 ## 1.0.0
 
 * Rewrite of service layer to use a proxy java object with OSGi bundle. Eliminates issues such as [#15](https://github.com/pixl8/cbjgroups/issues/15) + should perform slightly better (already performs well)
